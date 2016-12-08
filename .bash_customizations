@@ -1,0 +1,30 @@
+### Aliases
+alias ll='ls -ahlF --group-directories-first'
+alias ccat='pygmentize -g'
+
+
+
+### Bash history autocompletion bindings
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
+
+
+### Git related customizations
+#GIT_PS1_SHOWDIRTYSTATE=1
+#GIT_PS1_SHOWSTASHSTATE=1
+#GIT_PS1_SHOWUNTRACKEDFILES=1
+# Explicitly unset color (default anyhow). Use 1 to set it.
+#GIT_PS1_SHOWCOLORHINTS=
+#GIT_PS1_DESCRIBE_STYLE="branch"
+#GIT_PS1_SHOWUPSTREAM="auto git"
+
+export GIT_PS1_DESCRIBE_STYLE=1
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+
+
+
+### Custom prompt
+PS1='\[\e[0;35m\][\w]\[\e[m\]$(__git_ps1)\n\[\e[1;31m\]>\[\e[m\] '
