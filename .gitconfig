@@ -1,0 +1,8 @@
+[user]
+	name = Oleg Kulyk
+	email = helh.saintman@gmail.com
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
