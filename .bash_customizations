@@ -9,7 +9,6 @@ bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
 
-
 ### Git related customizations
 #GIT_PS1_SHOWDIRTYSTATE=1
 #GIT_PS1_SHOWSTASHSTATE=1
@@ -24,6 +23,23 @@ export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 
+
+## Docker
+function bot {
+  case $1 in
+    "run" )
+      shift
+      docker-compose run --rm $@;;
+    * )
+      docker-compose $@;;
+  esac
+}
+
+# Remove all the containers and dangling images
+function  docker_cleanup {
+  docker rm -v $(docker ps -a -q -f status=exited)
+  docker rmi $(docker images -f "dangling=true" -q)
+}
 
 
 ### Custom prompt
