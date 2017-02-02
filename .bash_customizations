@@ -25,21 +25,38 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 
 
 ## Docker
+CONTAINER_NON_ROOT_USER="phantom"
 function bot {
   case $1 in
     "run" )
       shift
       docker-compose run --rm $@;;
+    "init-app" )
+      shift
+      docker-init $@;;
     * )
       docker-compose $@;;
   esac
 }
 
-# Remove all the containers and dangling images
-function  docker_cleanup {
-  docker rm -v $(docker ps -a -q -f status=exited)
-  docker rmi $(docker images -f "dangling=true" -q)
+function  docker-init {
+  case $1 in
+    "elixir" )
+      shift
+      init-elixir $@;;
+    * )
+      echo "Error: Project type is not recognized!";;
+  esac
 }
+
+function  init-elixir {
+  if [ -z "$1" ]; then
+    docker run -it --rm -v $(pwd):/home/$CONTAINER_NON_ROOT_USER/app eleidan/elixir:1.4.0-jessie docker-init.sh
+  else
+    docker run -it --rm -v $(pwd):/home/$CONTAINER_NON_ROOT_USER/app eleidan/elixir:$1 docker-init.sh
+  fi
+}
+
 
 
 ### Custom prompt
