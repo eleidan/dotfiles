@@ -167,6 +167,9 @@ bar {
 
 ################################################################################
 ### Customizations
+# Keyboard layout
+exec --no-startup-id setxkbmap us,ua -option "grp:caps_toggle,compose:ralt"
+
 # Lock the screen
 bindsym $mod+shift+x exec i3lock
 
