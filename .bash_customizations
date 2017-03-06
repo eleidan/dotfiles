@@ -31,9 +31,9 @@ function bot {
     "run" )
       shift
       docker-compose run --rm $@;;
-    "init-app" )
+    "init" )
       shift
-      docker-init $@;;
+      docker_init $@;;
     "labels" )
       shift
       docker_labels $@;;
@@ -42,21 +42,13 @@ function bot {
   esac
 }
 
-function  docker-init {
-  case $1 in
-    "elixir" )
-      shift
-      init-elixir $@;;
-    * )
-      echo "Error: Project type is not recognized!";;
-  esac
-}
-
-function  init-elixir {
-  if [ -z "$1" ]; then
-    docker run -it --rm -v $(pwd):/home/$CONTAINER_NON_ROOT_USER/app eleidan/elixir:1.4.0-jessie docker-init.sh
+function  docker_init {
+  local init_command="$(docker_labels $1 init)"
+  if [[ $init_command == "<no value>" ]]; then
+    echo "Image $1 provides no instructions for initialization."
+    return 1
   else
-    docker run -it --rm -v $(pwd):/home/$CONTAINER_NON_ROOT_USER/app eleidan/elixir:$1 docker-init.sh
+    eval $init_command
   fi
 }
 
