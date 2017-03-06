@@ -34,6 +34,9 @@ function bot {
     "init-app" )
       shift
       docker-init $@;;
+    "labels" )
+      shift
+      docker_labels $@;;
     * )
       docker-compose $@;;
   esac
@@ -57,7 +60,13 @@ function  init-elixir {
   fi
 }
 
-
+function docker_labels {
+  if [ -z "$2" ]; then
+    docker inspect $1 -f "{{json .Config.Labels}}"
+  else
+    docker inspect $1 -f "{{.Config.Labels.$2}}"
+  fi
+}
 
 ### Custom prompt
 PS1='\[\e[0;35m\][\w]\[\e[m\]$(__git_ps1)\n\[\e[1;31m\]>\[\e[m\] '
