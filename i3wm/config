@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:ubuntu mono regular 14
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -96,10 +96,12 @@ bindsym $mod+a focus parent
 set $ws1 "1: Terminals"
 set $ws2 "2: Editors"
 set $ws5 "5: Browsers"
+set $ws0 "10: Music"
 
 # assign particular software to it's own workspaces
 assign [class="Atom"] $ws2
 assign [class="Firefox"] $ws5
+assign [class="Google-chrome"] $ws5
 
 
 # switch to workspace
@@ -112,7 +114,7 @@ bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+0 workspace $ws0
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -124,7 +126,7 @@ bindsym $mod+Shift+6 move container to workspace 6
 bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+0 move container to workspace $ws0
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -162,13 +164,15 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        status_command i3blocks
 }
 
 ################################################################################
 ### Customizations
 # Keyboard layout
 exec --no-startup-id setxkbmap us,ua -option "grp:caps_toggle,compose:ralt"
+# Send signals to i3blocks to update status
+bindsym --release Caps_Lock exec pkill -SIGRTMIN+10 i3blocks
 
 # Lock the screen
 bindsym $mod+shift+x exec i3lock -i ${HOME}/Pictures/Wallpapers/1920x1080/just-the-eyes.png
@@ -176,6 +180,7 @@ bindsym $mod+shift+x exec i3lock -i ${HOME}/Pictures/Wallpapers/1920x1080/just-t
 
 # Launchers
 bindsym $mod+shift+b exec firefox
+bindsym $mod+shift+g exec google-chrome
 
 # Pulse Audio controls
 set $sink `pactl list short sinks | grep RUNNING | cut -f1`
@@ -183,10 +188,18 @@ set $sink `pactl list short sinks | grep RUNNING | cut -f1`
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $sink +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $sink -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute $sink toggle # mute sound
+# Send signals to i3blocks to update status
+bindsym --release XF86AudioRaiseVolume exec pkill -SIGRTMIN+11 i3blocks
+bindsym --release XF86AudioLowerVolume exec pkill -SIGRTMIN+11 i3blocks
+bindsym --release XF86AudioMute exec pkill -SIGRTMIN+11 i3blocks
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+# set $monitor `xrandr -q | grep " connected" | cut -d " " -f 1`
+# xrandr --output eDP-1 --brightness 0.5
+
+# The following uses too much of CPU
+# bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
+# bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
 
 # Touchpad controls
 bindsym XF86Tools exec toggle_touchpad # toggle touchpad
