@@ -171,6 +171,9 @@ bar {
 ### Customizations
 # Keyboard layout
 exec --no-startup-id setxkbmap us,ua -option "grp:caps_toggle,compose:ralt"
+# Get rid of GNOME desktop via Nautilus
+exec --no-startup-id gsettings set org.gnome.desktop.background show-desktop-icons false
+
 # Send signals to i3blocks to update status
 bindsym --release Caps_Lock exec pkill -SIGRTMIN+10 i3blocks
 
