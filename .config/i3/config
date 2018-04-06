@@ -207,6 +207,11 @@ bindsym --release XF86AudioMute exec pkill -SIGRTMIN+11 i3blocks
 # Touchpad controls
 bindsym XF86Tools exec toggle_touchpad # toggle touchpad
 
+# Screenshots
+set $screenshot_destination "$HOME/Pictures/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"
+bindsym Print exec scrot $screenshot_destination
+bindsym $mod+Print exec scrot -u $screenshot_destination
+bindsym --release $mod+Shift+Print exec scrot -s $screenshot_destination
 
 ################################################################################
 ### Colors
