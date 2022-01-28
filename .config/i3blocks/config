@@ -92,7 +92,8 @@ min_width=⚛: 100%
 #
 # The battery instance defaults to 0.
 [battery]
-label=🗲
+label=🔋
+#label=🗲
 color=#AAAAAA
 interval=30
 
@@ -100,15 +101,21 @@ interval=30
 #
 [time]
 markup=pango
-command=echo "<span color='cyan'>$(date '+%b %-d %a')</span> <span color='linen'>$(date '+%H:%M:%S')</span>"
+command=echo "<span color='cyan'>$(date '+%b %-d %a')</span> <span color='linen'>$(date '+%H:%M')</span>"
 interval=5
 
 # Date Time
-#
+# Custom keyboard script
+# Place it in the following directory:
+# /usr/share/i3blocks/
+# Like follows
+# wget https://github.com/eleidan/keyboard-layout-fetcher/blob/master/keyboard
+# chmod a+x keyboard
+# sudo mv keyboard /usr/share/i3blocks/
 [keyboard]
 signal=10
 label=
 # label=🖮
 color=#FF0000
-command=/home/neo/forge/keyboard_layout_fetcher/keyboard
+#command=/home/neo/forge/keyboard_layout_fetcher/keyboard
 interval=once
